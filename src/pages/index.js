@@ -36,6 +36,22 @@ function removeColorsFromName(name) {
   return newName
 }
 
+
+const downloadTxtFile = (serverStatuses) => {
+  let cfgContents = ""
+
+  for (let i = 0; i < serverStatuses.length; i++) {
+    cfgContents += 'seta server' + (i + 1) + ' "' + serverStatuses[i].server.address + ':' + serverStatuses[i].server.port + '"\n'
+  }
+
+  const element = document.createElement("a");
+  const file = new Blob([cfgContents], { type: 'text/plain' });
+  element.href = URL.createObjectURL(file);
+  element.download = "autoexec.cfg";
+  document.body.appendChild(element); // Required for this to work in FireFox
+  element.click();
+}
+
 function Index({ serverStatuses }) {
   return (
     <div>
@@ -55,7 +71,7 @@ function Index({ serverStatuses }) {
         </Col>
 
         <Col className="pr-0 pl-0">
-          <MDBBtn color="primary" className="mt-3 ml-3">
+          <MDBBtn color="primary" className="mt-3 ml-3" onClick={() => downloadTxtFile(serverStatuses)}>
             Download Favorites autoexec.cfg
           </MDBBtn>
 
