@@ -1,7 +1,8 @@
 import {
   Row,
   Col,
-  MDBInput
+  MDBInput,
+  MDBBtn
 } from "mdbreact"
 
 import fetch from 'isomorphic-unfetch'
@@ -54,6 +55,14 @@ function Index({ serverStatuses }) {
         </Col>
 
         <Col className="pr-0 pl-0">
+          <MDBBtn color="primary" className="mt-3 ml-3">
+            Download Favorites autoexec.cfg
+          </MDBBtn>
+
+          <MDBBtn color="secondary" className="float-right mr-3 mt-3">
+            Add Server
+          </MDBBtn>
+
           <Row className="m-0">
             { serverStatuses.map((serverStatus) => {
               return (
