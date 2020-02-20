@@ -79,7 +79,7 @@ class Index extends React.Component {
     return (
       <MDBContainer>
       <Row className="m-0">
-        <Col size="12" lg="3" xl="2" className="p-3">
+        <Col size="12" lg="3" className="p-3">
           <div className="font-weight-bold text-center border border-dark p-1 elegant-color-dark">Shoutbox</div>
           <iframe
             className="pb-4"
