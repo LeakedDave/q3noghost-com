@@ -36,17 +36,17 @@ function ipString(input) {
 function GameType(gameType) {
   switch (gameType) {
     case "0":
-      return "Free For All"
+      return "FFA"
     case "1":
-      return "Tournament"
+      return "1vs1"
     case "2":
-      return "Free For All"
+      return "FFA"
     case "3":
-      return "Team Deathmatch"
+      return "TDM"
     case "4":
-      return "Capture the Flag"
+      return "CTF"
     default:
-      return "Quake 3 Arena"
+      return "Q3A"
   }
 }
 
