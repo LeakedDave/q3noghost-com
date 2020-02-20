@@ -14,6 +14,25 @@ import fetch from 'isomorphic-unfetch'
 
 // https://image.gametracker.com/images/maps/160x120/q3/q3dm6remix.jpg
 
+/**
+ * Removes all non-digit characters from a string
+ * @param {string} input - The string to remove non-digit characters from
+ * @returns {string} The string with all non-digit characters removed
+ */
+function numericString(input) {
+  return input.replace(/\D/g, "")
+}
+
+
+/**
+ * Removes all non-digit characters from a string (excluding dashes and parenthesis)
+ * @param {string} input - The string to remove non-digit characters from (excluding dashes and parenthesis)
+ * @returns {string} The string with all non-digit characters removed (excluding dashes and parenthesis)
+ */
+function ipString(input) {
+  return input.replace(/[^\d-.]/g, "")
+}
+
 function GameType(gameType) {
   switch (gameType) {
     case "0":
@@ -60,11 +79,13 @@ const downloadTxtFile = (serverStatuses) => {
 
 class Index extends React.Component {
   state = {
-    modal: false
+    modal: false,
+    port: "27960"
   }
 
   constructor({ serverStatuses }) {
     super()
+
     this.serverStatuses = serverStatuses
   }
 
@@ -107,7 +128,7 @@ class Index extends React.Component {
               return (
                 <Col className="p-3" xs="12" lg="6" key={serverStatus.state.name}>
                   <Row className="border border-dark m-0">
-                    <Col className="p-0" xs="5" size="4" md="3" lg="5" xl="4">
+                    <Col className="p-0" xs="5" size="4" md="3" lg="5" xl="5">
                       <div className="elegant-color small text-center p-1">
                         <b>
                           { serverStatus.state.name }
@@ -186,17 +207,51 @@ class Index extends React.Component {
       <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered>
         <MDBModalHeader className="bg-dark">Add Server</MDBModalHeader>
         <MDBModalBody className="bg-dark">
-          <MDBInput label="IP Address" />
-          <MDBInput label="Port" value="27960" />
-          <MDBInput label="Domain (optional)" />
+          <MDBInput label="IP Address" value={this.state.address} onChange={(event) => this.setState({address: ipString(event.target.value)})} />
+          <MDBInput label="Port" value={this.state.port} onChange={(event) => this.setState({port: numericString(event.target.value)})} />
+          <MDBInput label="Domain (optional)" value={this.state.domain} onChange={(event) => this.setState({domain: event.target.value})} />
         </MDBModalBody>
         <MDBModalFooter className="bg-dark">
           <MDBBtn color="secondary" onClick={this.toggle}>Close</MDBBtn>
-          <MDBBtn color="primary">Submit</MDBBtn>
+          <MDBBtn color="primary" onClick={this.submitServer}>Submit</MDBBtn>
         </MDBModalFooter>
       </MDBModal>
     </MDBContainer>
     )
+  }
+
+  submitServer = async () => {
+    let postBody = {
+      address: this.state.address,
+      port: this.state.port,
+      domain: this.state.domain
+    }
+
+    let response = await global.fetch("/api/addServer", {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      method: "post",
+      body: JSON.stringify(postBody)
+    })
+
+    response.json().then((result) => {
+      // Check for Server Error
+      if (result.error) {
+        alert(result.error.message)
+        return
+      }
+
+      if (result.errorMessage) {
+        alert(result.errorMessage)
+        return
+      }
+
+      window.location.reload()
+    }, (error) => {
+      alert(error)
+    })
   }
 }
 
