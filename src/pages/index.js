@@ -115,13 +115,17 @@ class Index extends React.Component {
         </Col>
 
         <Col className="pr-0 pl-0">
-          <MDBBtn color="primary" className="mt-3 ml-3" onClick={() => downloadTxtFile(this.serverStatuses)}>
-            Download Favorites autoexec.cfg
-          </MDBBtn>
+          <Row className="m-0">
+            <Col size="12" className="p-0">
+              <MDBBtn color="primary" className="mt-3 ml-3" onClick={() => downloadTxtFile(this.serverStatuses)}>
+                DL Favorites autoexec.cfg
+              </MDBBtn>
 
-          <MDBBtn color="secondary" className="float-right mr-3 mt-3" onClick={this.toggle}>
-            Add Server
-          </MDBBtn>
+              <MDBBtn color="secondary" className="float-right mr-3 mt-3" onClick={this.toggle}>
+                Add Server
+              </MDBBtn>
+            </Col>
+          </Row>
 
           <Row className="m-0">
             { this.serverStatuses.map((serverStatus) => {
