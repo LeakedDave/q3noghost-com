@@ -11,12 +11,14 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBIcon
+  MDBIcon,
+  MDBContainer
 } from "mdbreact"
 
 export default function Index() {
   return (
     <MDBNavbar className="elegant-color-dark" expand="md">
+      <MDBContainer>
        <MDBNavbarBrand className="pb-0">
          <h5 className="white-text font-weight-bold">
            <img className="mr-2" src={require('../../images/railgun_logo.png')} width="90" />
@@ -24,6 +26,7 @@ export default function Index() {
            <span>Quake 3 NoGhost</span>
          </h5>
        </MDBNavbarBrand>
+     </MDBContainer>
      </MDBNavbar>
   )
 }

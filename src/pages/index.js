@@ -2,7 +2,12 @@ import {
   Row,
   Col,
   MDBInput,
-  MDBBtn
+  MDBBtn,
+  MDBModal,
+  MDBModalHeader,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBContainer
 } from "mdbreact"
 
 import fetch from 'isomorphic-unfetch'
@@ -52,9 +57,27 @@ const downloadTxtFile = (serverStatuses) => {
   element.click();
 }
 
-function Index({ serverStatuses }) {
-  return (
-    <div>
+
+class Index extends React.Component {
+  state = {
+    modal: false
+  }
+
+  constructor({ serverStatuses }) {
+    super()
+    this.serverStatuses = serverStatuses
+  }
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    })
+  }
+
+  render() {
+
+    return (
+      <MDBContainer>
       <Row className="m-0">
         <Col size="12" lg="3" xl="2" className="p-3">
           <div className="font-weight-bold text-center border border-dark p-1 elegant-color-dark">Shoutbox</div>
@@ -71,16 +94,16 @@ function Index({ serverStatuses }) {
         </Col>
 
         <Col className="pr-0 pl-0">
-          <MDBBtn color="primary" className="mt-3 ml-3" onClick={() => downloadTxtFile(serverStatuses)}>
+          <MDBBtn color="primary" className="mt-3 ml-3" onClick={() => downloadTxtFile(this.serverStatuses)}>
             Download Favorites autoexec.cfg
           </MDBBtn>
 
-          <MDBBtn color="secondary" className="float-right mr-3 mt-3">
+          <MDBBtn color="secondary" className="float-right mr-3 mt-3" onClick={this.toggle}>
             Add Server
           </MDBBtn>
 
           <Row className="m-0">
-            { serverStatuses.map((serverStatus) => {
+            { this.serverStatuses.map((serverStatus) => {
               return (
                 <Col className="p-3" xs="12" lg="6" key={serverStatus.state.name}>
                   <Row className="border border-dark m-0">
@@ -159,8 +182,20 @@ function Index({ serverStatuses }) {
         </Col>
 
       </Row>
-    </div>
-  )
+
+      <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
+        <MDBModalHeader className="text-dark" toggle={this.toggle}>Add Server</MDBModalHeader>
+        <MDBModalBody className="text-dark">
+          (...)
+        </MDBModalBody>
+        <MDBModalFooter>
+          <MDBBtn color="secondary" onClick={this.toggle}>Close</MDBBtn>
+          <MDBBtn color="primary">Submit</MDBBtn>
+        </MDBModalFooter>
+      </MDBModal>
+    </MDBContainer>
+    )
+  }
 }
 
 Index.getInitialProps = async ({ req }) => {
