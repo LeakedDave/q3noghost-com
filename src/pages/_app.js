@@ -36,7 +36,7 @@ function RootApp({ Component, pageProps }) {
           .form-control:active,
           .form-control:focus,
           .form-control:focus:active {
-            background-color: #343434!important;
+            background-color: #212121!important;
             border-color: #96d3ec;
             color: white;
           }

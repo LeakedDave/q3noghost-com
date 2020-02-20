@@ -183,12 +183,14 @@ class Index extends React.Component {
 
       </Row>
 
-      <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-        <MDBModalHeader className="text-dark" toggle={this.toggle}>Add Server</MDBModalHeader>
-        <MDBModalBody className="text-dark">
-          (...)
+      <MDBModal isOpen={this.state.modal} toggle={this.toggle} centered>
+        <MDBModalHeader className="bg-dark">Add Server</MDBModalHeader>
+        <MDBModalBody className="bg-dark">
+          <MDBInput label="IP Address" />
+          <MDBInput label="Port" value="27960" />
+          <MDBInput label="Domain (optional)" />
         </MDBModalBody>
-        <MDBModalFooter>
+        <MDBModalFooter className="bg-dark">
           <MDBBtn color="secondary" onClick={this.toggle}>Close</MDBBtn>
           <MDBBtn color="primary">Submit</MDBBtn>
         </MDBModalFooter>
